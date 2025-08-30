@@ -1,4 +1,4 @@
-import { SkillCategoryType } from "@/type"
+import { SkillCategoryType } from "@/type";
 import {
   SiJavascript,
   SiTypescript,
@@ -13,10 +13,11 @@ import {
   SiFigma,
   SiCanva,
   SiChatbot,
-} from "react-icons/si"
-import { Brain, Clock, Figma, Lightbulb, Users } from "lucide-react"
-import { chatgpt } from "./images"
-import Image from "next/image"
+  SiPython,
+} from "react-icons/si";
+import { Brain, Clock, Figma, Lightbulb, Users } from "lucide-react";
+import { chatgpt } from "./images";
+import Image from "next/image";
 
 export const skillCategories: SkillCategoryType[] = [
   {
@@ -33,8 +34,8 @@ export const skillCategories: SkillCategoryType[] = [
         proficiency: 85,
       },
       {
-        name: "Kotlin",
-        icon: <SiKotlin className="w-6 h-6 " color="#a855f7" />,
+        name: "Python",
+        icon: <SiPython className="w-6 h-6 " color="#60a5fa" />,
         proficiency: 75,
       },
     ],
@@ -140,4 +141,4 @@ export const skillCategories: SkillCategoryType[] = [
       },
     ],
   },
-]
+];

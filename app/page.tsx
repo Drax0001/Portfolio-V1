@@ -1,19 +1,44 @@
-"use client"
+"use client";
 
-import Image from "next/image"
-import ProfileCard from "./components/ProfileCard"
-import Navbar from "./components/Navbar"
-import { projects } from "@/constants/projects"
-import ProjectCard from "./components/ProjectCard"
-import SkillsSection from "./components/SkillsSection"
-import Resume from "./components/ResumeSection"
-import { motion } from "framer-motion"
-import ContactForm from "./components/ContactForm"
-import Footer from "./components/Footer"
+import Image from "next/image";
+import ProfileCard from "./components/ProfileCard";
+import Navbar from "./components/Navbar";
+import { projects } from "@/constants/projects";
+import ProjectCard from "./components/ProjectCard";
+import ProjectFilter from "./components/ProjectFilter";
+import SkillsSection from "./components/SkillsSection";
+import Resume from "./components/ResumeSection";
+import { motion } from "framer-motion";
+import ContactForm from "./components/ContactForm";
+import Footer from "./components/Footer";
+import { useState, useMemo } from "react";
 // import { Phone } from "lucide-react"
-import { MdEmail, MdMyLocation, MdPhone } from "react-icons/md"
+import { MdEmail, MdMyLocation, MdPhone } from "react-icons/md";
 
 export default function Home() {
+  const [selectedTechnologies, setSelectedTechnologies] = useState<string[]>(
+    []
+  );
+
+  // Extract unique technologies from all projects
+  const allTechnologies = useMemo(() => {
+    const techSet = new Set<string>();
+    projects.forEach((project) => {
+      project.technologies.forEach((tech) => techSet.add(tech));
+    });
+    return Array.from(techSet).sort();
+  }, []);
+
+  // Filter projects based on selected technologies
+  const filteredProjects = useMemo(() => {
+    if (selectedTechnologies.length === 0) {
+      return projects;
+    }
+    return projects.filter((project) =>
+      project.technologies.some((tech) => selectedTechnologies.includes(tech))
+    );
+  }, [selectedTechnologies]);
+
   return (
     <main className="bg-purple-custom min-h-screen ">
       <div className="px-8 max-w-2xl mx-auto flex flex-col gap-y-8">
@@ -36,17 +61,39 @@ export default function Home() {
             <h1 className="text-2xl text-reddish font-inter font-bold mb-4">
               Projects
             </h1>
+
+            <ProjectFilter
+              technologies={allTechnologies}
+              selectedTechnologies={selectedTechnologies}
+              onFilterChange={setSelectedTechnologies}
+            />
+
             <div className="flex flex-col gap-8">
-              {projects.map((project) => (
-                <ProjectCard
-                  key={project.title}
-                  description={project.description}
-                  title={project.title}
-                  technologies={project.technologies}
-                  image={project.image}
-                  githubLink={project.githubLink}
-                />
-              ))}
+              {filteredProjects.length > 0 ? (
+                filteredProjects.map((project) => (
+                  <ProjectCard
+                    key={project.title}
+                    description={project.description}
+                    title={project.title}
+                    slug={project.slug}
+                    technologies={project.technologies}
+                    image={project.image}
+                    githubLink={project.githubLink}
+                  />
+                ))
+              ) : (
+                <div className="text-center py-8">
+                  <p className="text-gray-400 text-lg font-satoshi">
+                    No projects found matching the selected technologies.
+                  </p>
+                  <button
+                    onClick={() => setSelectedTechnologies([])}
+                    className="mt-4 px-4 py-2 bg-reddish text-white rounded-lg hover:bg-opacity-80 transition-colors duration-200 font-satoshi"
+                  >
+                    Clear Filters
+                  </button>
+                </div>
+              )}
             </div>
           </div>
 
@@ -123,5 +170,5 @@ export default function Home() {
         </motion.div>
       </div>
     </main>
-  )
+  );
 }

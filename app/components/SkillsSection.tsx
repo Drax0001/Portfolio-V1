@@ -1,8 +1,7 @@
-"use client"
+"use client";
 
-import Progress from "./Progress"
-import { skillCategories } from "@/constants/skills"
-import { motion } from "framer-motion"
+import { skillCategories } from "@/constants/skills";
+import { motion } from "framer-motion";
 
 export default function SkillsSection() {
   return (
@@ -29,22 +28,11 @@ export default function SkillsSection() {
               {category.name}
             </h1>
           </div>
-          <div className="space-y-4">
+          <div className="space-y-3">
             {category.skills.map((skill) => (
-              <div key={skill.name} className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-2">
-                    {skill.icon && skill.icon}
-                    <span className="text-sm text-gray-300">{skill.name}</span>
-                  </div>
-                  <span className="text-sm text-gray-400">
-                    {skill.proficiency}%
-                  </span>
-                </div>
-                <Progress
-                  value={skill.proficiency}
-                  ariaLabel={`${skill.name} proficiency`}
-                />
+              <div key={skill.name} className="flex items-center space-x-3">
+                {skill.icon && skill.icon}
+                <span className="text-sm text-gray-300">{skill.name}</span>
               </div>
             ))}
           </div>
@@ -52,5 +40,5 @@ export default function SkillsSection() {
       ))}
     </div>
     // </div>
-  )
+  );
 }

@@ -1,31 +1,33 @@
-"use client"
+"use client";
 
-import { ProjectType } from "@/type"
-import Image from "next/image"
-import Link from "next/link"
-import { arrowRight } from "@/constants/images"
-import { ArrowRight } from "lucide-react"
-import { motion } from "framer-motion"
+import { ProjectType } from "@/type";
+import Image from "next/image";
+import Link from "next/link";
+import { arrowRight } from "@/constants/images";
+import { ArrowRight } from "lucide-react";
+import { motion } from "framer-motion";
 
 interface Props {
-  title: string
-  description: string
-  image: any
-  technologies: string[]
-  features?: string[]
-  demoLink?: string
-  githubLink: string
+  title: string;
+  slug: string;
+  description: string;
+  image: any;
+  technologies: string[];
+  features?: string[];
+  demoLink?: string;
+  githubLink: string;
 }
 
 export default function ProjectCard({
   description,
   title,
+  slug,
   technologies,
   image,
   githubLink,
 }: Props) {
   return (
-    <Link href={githubLink} target="_blank">
+    <Link href={`/projects/${slug}`}>
       <motion.div
         transition={{ duration: 0.9, ease: "linear" }}
         className="flex items-center gap-4 px-6 py-4 bg-purple-custom rounded-lg w-full max-w-4xl mx-auto p-4 hover:cursor-pointer hover:brightness-110 md:p-6 text-white font-satoshi md:flex-col"
@@ -51,5 +53,5 @@ export default function ProjectCard({
         </div>
       </motion.div>
     </Link>
-  )
+  );
 }
